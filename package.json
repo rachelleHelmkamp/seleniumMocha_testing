@@ -1,0 +1,22 @@
+{
+  "name": "mochaautomation",
+  "version": "1.0.0",
+  "description": "Automated Selenium tests using Mocha",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rachelleHelmkamp/seleniumMocha_testing.git"
+  },
+  "author": "Rachelle Helmkamp",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rachelleHelmkamp/seleniumMocha_testing/issues"
+  },
+  "homepage": "https://github.com/rachelleHelmkamp/seleniumMocha_testing#readme",
+  "dependencies": {
+    "selenium-webdriver": "^4.1.2"
+  }
+}
