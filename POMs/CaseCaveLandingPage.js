@@ -13,8 +13,12 @@ const lnkResetAllFilters = { xpath: "//div[text()='Reset All Filters']" }
 // Sort order dropdown
 const ddSortOrder = { xpath: "(//div[contains(@class,'RavenSelect__control')])[1]" }
 const ddTypeDisplay = { xpath: "(//div[contains(@class,'RavenSelect__control')])[2]" }
-const txtSearch = { xpath: "//input[@placeholder='Search']" }
+const txtSearch = { xpath: "//input[@placeholder='Search Case Cave']" }
 const btnSearch = { xpath: "//button[p[text()='Search']]" }
+
+// Case type toggle
+const rbExpertsAndFrontline = { xpath: "//span[text()='Experts and Frontline']/preceding-sibling::div" }
+const rbTechnicalSupport = { xpath: "//span[text()='Technical Support']/preceding-sibling::div" }
 
 const xpathForCaseCards = "//div[contains(@class,'CaseList__CaseListContainer')]"
 

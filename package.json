@@ -1,10 +1,10 @@
 {
-  "name": "mochaautomation",
+  "name": "seleniummocha_testing",
   "version": "1.0.0",
   "description": "Automated Selenium tests using Mocha",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./Tests/landingPageSortOrder.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/rachelleHelmkamp/seleniumMocha_testing#readme",
   "dependencies": {
-    "selenium-webdriver": "^4.1.2"
+    "chromedriver": "^101.0.0",
+    "selenium-webdriver": "^4.2.0"
   }
 }
