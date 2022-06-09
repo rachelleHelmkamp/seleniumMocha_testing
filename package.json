@@ -18,6 +18,9 @@
   "homepage": "https://github.com/rachelleHelmkamp/seleniumMocha_testing#readme",
   "dependencies": {
     "chromedriver": "^101.0.0",
+    "dotenv": "^16.0.1",
+    "find-process": "^1.4.7",
+    "mocha": "^10.0.0",
     "selenium-webdriver": "^4.2.0"
   }
 }

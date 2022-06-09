@@ -7,12 +7,41 @@ var assert = require("assert")
 // These are the enums to help keep things organized when specifying values.
 const Constants = require("../Enums/Constants.js");
 const { addConsoleHandler } = require("selenium-webdriver/lib/logging.js");
+const globals = require("../global/globals.js");
+const { config } = require("dotenv");
+const path = require("path");
+const fProcess = require('find-process');
 
 describe('sort order verification', function()
 {
     let driver
     let vars
     let environment
+    let pw
+    let url
+
+    before(async function()
+    {   
+        // One option here...
+        // we have the current process, which has the parent ID. The parent process should have all of the launch parameters.
+        // Get the ID of the parent process.
+        // Get the actual parent process.
+        // Get the parentProcess.argv.
+        // Parse that out to get the environment to use to get the correct .env file to use.
+        let parentProcess = await fProcess('pid', process.ppid);
+        let thing = parentProcess[0];
+        console.log(thing);
+        let pArgs = thing.cmd.split(' ');
+        let envToLoad = pArgs[pArgs.length-2]
+
+        require('dotenv').config({ path: path.resolve(__dirname, envToLoad)});
+        //require('dotenv').config();
+        //console.log(process.argv);
+
+        // Set variables here, most likely user/environment.
+        url = process.env.URL;
+        pw = process.env.PASSWORD;
+    })
 
     beforeEach(async function()
     {
@@ -21,19 +50,16 @@ describe('sort order verification', function()
 
         // Maximize the window.
         await driver.manage().window().maximize();
-
-        // Set variables here, most likely user/environment.
-        vars = process.argv;
-        vars.forEach((item, index) => 
-        {
-            console.log(`${index}: ${item}`)
-        });
-        environment = vars[vars.length - 1];
     })
 
     afterEach(async function()
     {
         await driver.quit();
+    })
+
+    after(async function()
+    {
+
     })
 
     // This is the actual test function.
@@ -51,19 +77,10 @@ describe('sort order verification', function()
         let ccLanding = new CaseCaveLanding(driver);
 
         var username = "mayur_sa";
-        var qaPW = "Pepcusqa@23";
-
-        var mineralURL = "https://apps.qa01.trustmineral-staging.com/auth/login";
-
-        if (environment == 'Alpha')
-        {
-            //username = "mayur_ta";
-            mineralURL = "https://apps.alpha01.trustmineral-staging.com/auth/login";
-        }            
 
         // Sign in to the platform and wait for redirection to the dashboard.
-        await signIn.load(mineralURL);
-        await signIn.login(username, qaPW);
+        await signIn.load(url);
+        await signIn.login(username, pw);
     
         // Wait for the dashboard page to load.
         await dashboard.waitForLoading();

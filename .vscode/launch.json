@@ -12,7 +12,6 @@
             "999999",
             "--colors",
             "${workspaceFolder}/Tests",
-            "--parallel",
             "QA"
         ],
         "internalConsoleOptions": "openOnSessionStart",
@@ -31,8 +30,9 @@
                 "--timeout",
                 "999999",
                 "--colors",
-                "${workspaceFolder}/Tests/landingPageSortOrder.js",
-                "QA"
+                "--parallel", 
+                "../config/qa.env",
+                "${workspaceFolder}/Tests/landingPageSortOrder.js"
             ],
             "internalConsoleOptions": "openOnSessionStart",
             "name": "Mocha Single Test",

@@ -2,25 +2,33 @@
 const { Builder, By, Key, until } = require('selenium-webdriver')
 require("chromedriver");
 const assert = require('assert')
+const globals = require("../global/globals.js");
 
 describe('LoginAndVerifyContactExperts', function() {
   this.timeout(30000)
   let driver
   let vars
+  let pw
+  let url
   beforeEach(async function() {
     driver = await new Builder().forBrowser('chrome').build()
-    vars = {}
+    // Set variables here, most likely user/environment.
+    vars = process.argv;
+    environment = vars[vars.length - 1];
+    let envArgs = globals.GetEnvironmentVariables(environment);
+    pw = envArgs[0];
+    url = String(envArgs[1]);
   })
   afterEach(async function() {
     await driver.quit();
   })
   it('LoginAndVerifyContactExperts', async function() {
-    await driver.get("https://apps.qa01.trustmineral-staging.com/auth/login/login")
+    await driver.get(url)
     await driver.manage().window().setRect({ width: 1550, height: 838 })
     await driver.findElement(By.id("root_userCreds_username")).click()
     await driver.findElement(By.id("root_userCreds_username")).sendKeys("mayur_ta")
     await driver.findElement(By.id("root_userCreds_password")).click()
-    await driver.findElement(By.id("root_userCreds_password")).sendKeys("Pepcusqa@23")
+    await driver.findElement(By.id("root_userCreds_password")).sendKeys(pw)
     await driver.findElement(By.css(".Button-sc-1v2whja-0")).click()
     await driver.wait(until.elementLocated(By.xpath("//p[text()=\'Which type of Expert do you want to contact?\']")), 30000)
     assert(await driver.findElement(By.xpath("//p[text()='Which type of Expert do you want to contact?']")).getText() == "Which type of Expert do you want to contact?")
