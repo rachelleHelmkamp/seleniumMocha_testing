@@ -1,6 +1,8 @@
 const {By, until, ExpectedConditions} = require("selenium-webdriver");
 const caseCaveHeader = require("./caseCaveHeader");
 const Constants = require("../Enums/Constants");
+const {caseCaveHeaderText, lnkDashboard, lnkCases, lnkAssignments, lnkUnknownCases, lnkVPA, lnkUserLookup, lnkMessages, lnkTransferCases, lnkPreppedAnswers} = require("./caseCaveHeader");
+const ccHeader = require("./caseCaveHeader");
 
 // Filter elements.
 const btnHideFilters = { xpath: "//div[contains(@class,'Filters__CollapsePanelWrapper')]" }

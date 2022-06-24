@@ -3,6 +3,8 @@ const { Builder, By, Key, until } = require('selenium-webdriver')
 require("chromedriver");
 const assert = require('assert')
 const globals = require("../global/globals.js");
+const path = require("path");
+const fProcess = require('find-process');
 
 describe('LoginAndVerifyContactExperts', function() {
   this.timeout(30000)
@@ -10,18 +12,38 @@ describe('LoginAndVerifyContactExperts', function() {
   let vars
   let pw
   let url
-  beforeEach(async function() {
-    driver = await new Builder().forBrowser('chrome').build()
-    // Set variables here, most likely user/environment.
-    vars = process.argv;
-    environment = vars[vars.length - 1];
-    let envArgs = globals.GetEnvironmentVariables(environment);
-    pw = envArgs[0];
-    url = String(envArgs[1]);
+
+  before(async function()
+  {
+    // One option here...
+        // we have the current process, which has the parent ID. The parent process should have all of the launch parameters.
+        // Get the ID of the parent process.
+        // Get the actual parent process.
+        // Get the parentProcess.argv.
+        // Parse that out to get the environment to use to get the correct .env file to use.
+        let parentProcess = await fProcess('pid', process.ppid);
+        let thing = parentProcess[0];
+        console.log(thing);
+        let pArgs = thing.cmd.split(' ');
+        let envToLoad = pArgs[pArgs.length-2]
+
+        require('dotenv').config({ path: path.resolve(__dirname, envToLoad)});
+
+        // Set variables here, most likely user/environment.
+        url = process.env.URL;
+        pw = process.env.PASSWORD;
   })
+  beforeEach(async function() {
+    driver = await new Builder().forBrowser('chrome').build();
+    
+    // Maximize the window.
+    await driver.manage().window().maximize();
+  })
+
   afterEach(async function() {
     await driver.quit();
   })
+
   it('LoginAndVerifyContactExperts', async function() {
     await driver.get(url)
     await driver.manage().window().setRect({ width: 1550, height: 838 })

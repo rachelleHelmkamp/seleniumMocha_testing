@@ -10,9 +10,10 @@
             "bdd",
             "--timeout",
             "999999",
-            "--colors",
-            "${workspaceFolder}/Tests",
-            "QA"
+            "--colors", 
+            "--parallel", 
+            "../config/qa.env",
+            "${workspaceFolder}/Tests"
         ],
         "internalConsoleOptions": "openOnSessionStart",
         "name": "Mocha All Tests",

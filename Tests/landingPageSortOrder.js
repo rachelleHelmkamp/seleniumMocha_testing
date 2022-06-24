@@ -8,48 +8,25 @@ var assert = require("assert")
 const Constants = require("../Enums/Constants.js");
 const { addConsoleHandler } = require("selenium-webdriver/lib/logging.js");
 const globals = require("../global/globals.js");
-const { config } = require("dotenv");
-const path = require("path");
-const fProcess = require('find-process');
 
 describe('sort order verification', function()
 {
     let driver
-    let vars
-    let environment
     let pw
     let url
 
     before(async function()
     {   
-        // One option here...
-        // we have the current process, which has the parent ID. The parent process should have all of the launch parameters.
-        // Get the ID of the parent process.
-        // Get the actual parent process.
-        // Get the parentProcess.argv.
-        // Parse that out to get the environment to use to get the correct .env file to use.
-        let parentProcess = await fProcess('pid', process.ppid);
-        let thing = parentProcess[0];
-        console.log(thing);
-        let pArgs = thing.cmd.split(' ');
-        let envToLoad = pArgs[pArgs.length-2]
-
-        require('dotenv').config({ path: path.resolve(__dirname, envToLoad)});
-        //require('dotenv').config();
-        //console.log(process.argv);
+        let envVars = await globals.GetEnvironmentVariables();
 
         // Set variables here, most likely user/environment.
-        url = process.env.URL;
-        pw = process.env.PASSWORD;
+        url = envVars[0];
+        pw = envVars[1];
     })
 
     beforeEach(async function()
     {
-        // Create the driver, and Wait for it to build and launch. 
-        driver = await new Builder().forBrowser("chrome").build();
-
-        // Maximize the window.
-        await driver.manage().window().maximize();
+        driver = await globals.CreateDriver();
     })
 
     afterEach(async function()
@@ -69,7 +46,6 @@ describe('sort order verification', function()
         const Dashboard = require("../POMs/Dashboard.js");
         const SignIn = require("../POMs/SignIn.js");
         const CaseCaveLanding = require("../POMs/CaseCaveLandingPage.js");
-        const { isTypedArray } = require("util/types");     
 
         // Create the POMs that are being used in the test.
         let dashboard = new Dashboard(driver);
