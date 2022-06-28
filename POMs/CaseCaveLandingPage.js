@@ -156,9 +156,9 @@ class CaseCaveLandingPage extends caseCaveHeader
         return this.text({ xpath: fullPath });
     }
 
-    async ClickViewLink(index)
+    async ClickViewButton(index)
     {
-        this.click({ xpath: `(//a[text()='View'])[${index}]` });
+        this.click({ xpath: `(//button[text()='View'])[${index}]` });
     }
 
     async SelectSortByOption(option)
