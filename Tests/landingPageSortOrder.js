@@ -94,36 +94,8 @@ describe('sort order verification', function()
     })
 
     // This is the actual test function.
-    /* it('login verification', async function()
+    it('report checking', async function()
     {        
-        // POMs used by the test.
-        const Dashboard = require("../POMs/Dashboard.js");
-        const SignIn = require("../POMs/SignIn.js");  
-
-        // Create the POMs that are being used in the test.
-        let dashboard = new Dashboard(driver);
-        let signIn = new SignIn(driver);
-
-        var username = "mayur_sa";
-        var qaPW = "Pepcusqa@23";
-
-        var mineralURL = "https://apps.qa01.trustmineral-staging.com/auth/login";
-
-        // temp here.
-        let environment = Constants.Environments.QA;
-
-        if (environment == Constants.Environments.Alpha)
-        {
-            //username = "mayur_ta";
-            mineralURL = "https://apps.alpha01.trustmineral-staging.com/auth/login";
-        }            
-
-        // Sign in to the platform and wait for redirection to the dashboard.
-        await signIn.load(mineralURL);
-        await signIn.login(username, qaPW);
-    
-        // Wait for the dashboard page to load.
-        await dashboard.waitForLoading();
-        assert(await dashboard.verifyContactExpertsExists(), "The Contact Experts dashboard is visible.");
-    }) */
+        assert(1==2, "Failure to check wtf is going on with reporting.");
+    }) 
 })

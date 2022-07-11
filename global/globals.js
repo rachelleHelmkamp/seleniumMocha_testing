@@ -7,19 +7,27 @@ const chrome = require('selenium-webdriver/chrome');
  {
     static async GetEnvironmentVariables()
     {
-        // One option here...
-        // we have the current process, which has the parent ID. The parent process should have all of the launch parameters.
-        // Get the ID of the parent process.
-        // Get the actual parent process.
-        // Get the parentProcess.argv.
-        // Parse that out to get the environment to use to get the correct .env file to use.
+        // If the test is NOT run in parallel, what we want is the last item in argv.
+        // If the test IS run in parallel, what we want is the cmd to be split by spaces, and the note about the environment is the second to last entry.
         let variables = {}
+        let launchArgs;
+        let envIndex;
 
-        // When running in parallel the process that specifically runs the test will not have the full list of parameters used to launch the suite.
-        // Grab the parent process, which does have that information, and get the data from it.
-        let parentProcess = await fProcess('pid', process.ppid);
-        let pArgs = parentProcess[0].cmd.split(' ');
-        let envToLoad = pArgs[pArgs.length-2]
+        let runningProcess = await process;
+        if (runningProcess.argv.length == 2)
+        {
+            runningProcess = await fProcess('pid', process.ppid);
+            launchArgs = runningProcess[0].cmd.split(' ');
+            envIndex = launchArgs.length - 2;
+        }
+        else
+        {
+            launchArgs = runningProcess.argv;
+            envIndex = launchArgs.length - 2
+        }
+
+        // Get the path to the environment config file. 
+        let envToLoad = launchArgs[envIndex]
 
         // Load the values stored in the custom configuration to the process.
         require('dotenv').config({ path: path.resolve(__dirname, envToLoad)});
@@ -33,8 +41,8 @@ const chrome = require('selenium-webdriver/chrome');
     static async CreateDriver()
     {
         // Create the driver, and Wait for it to build and launch. 
-        //driver = await new Builder().forBrowser("chrome").setChromeOptions(new chrome.Options().headless()).build();
-        let driver = await new Builder().forBrowser("chrome").build();
+        let driver = await new Builder().forBrowser("chrome").setChromeOptions(new chrome.Options().headless()).build();
+        //let driver = await new Builder().forBrowser("chrome").build();
 
         // Maximize the window.
         await driver.manage().window().maximize();

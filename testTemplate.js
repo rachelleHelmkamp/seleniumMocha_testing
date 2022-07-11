@@ -17,6 +17,7 @@ describe('sort order verification', function()
 
     before(async function()
     {   
+        // This handles getting the needed variables for the environment specified in 
         let envVars = await globals.GetEnvironmentVariables();
 
         // Set variables here, most likely user/environment.
