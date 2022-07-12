@@ -9,7 +9,7 @@ const Constants = require("../Enums/Constants.js");
 const { addConsoleHandler } = require("selenium-webdriver/lib/logging.js");
 const globals = require("../global/globals.js");
 
-describe('sort order verification', function()
+describe('Case Cave Landing Page - sort order verification', function()
 {
     let driver
     let pw
@@ -19,7 +19,7 @@ describe('sort order verification', function()
     {   
         let envVars = await globals.GetEnvironmentVariables();
 
-        // Set variables here, most likely user/environment.
+        // Set password/environment.
         url = envVars[0];
         pw = envVars[1];
     })

@@ -9,7 +9,7 @@ var assert = require("assert")
 const Constants = require("../Enums/Constants.js");
 const { addConsoleHandler } = require("selenium-webdriver/lib/logging.js");
 
-describe('sort order verification', function()
+describe('THIS IS THE SUITE NAME, NAME IT FOR WHAT AREA YOU ARE TESTING', function()
 {
     let driver
     let pw
@@ -41,7 +41,7 @@ describe('sort order verification', function()
     })
 
     // This is the actual test function.
-    it('RENAME THIS METHOD TO WHAT YOU ARE TESTING', async function()
+    it('RENAME THIS METHOD TO WHAT SPECIFICALLY YOU ARE TESTING', async function()
     {        
         // Reference the POMs that are needed in the test
         const SignIn = require("../POMs/SignIn.js");

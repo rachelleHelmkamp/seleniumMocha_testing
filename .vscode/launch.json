@@ -9,7 +9,7 @@
             "-u",
             "bdd",
             "--timeout",
-            "999999",
+            "360000",
             "--colors", 
             "--parallel",
             "--require", 
@@ -35,7 +35,7 @@
                 "-u",
                 "bdd",
                 "--timeout",
-                "999999",
+                "360000",
                 "--colors", 
                 "--parallel",
                 "--require", 
@@ -47,7 +47,7 @@
                 "--charts",
                 "true",
                 "../config/qa.env",
-                "${workspaceFolder}/Tests/landingPageSortOrder.js"
+                "${workspaceFolder}/Tests/caseDetailsEditAnswer.js"
             ],
             "internalConsoleOptions": "openOnSessionStart",
             "name": "Mocha Single Test",

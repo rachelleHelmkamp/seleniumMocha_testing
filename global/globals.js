@@ -41,8 +41,8 @@ const chrome = require('selenium-webdriver/chrome');
     static async CreateDriver()
     {
         // Create the driver, and Wait for it to build and launch. 
-        let driver = await new Builder().forBrowser("chrome").setChromeOptions(new chrome.Options().headless()).build();
-        //let driver = await new Builder().forBrowser("chrome").build();
+        //let driver = await new Builder().forBrowser("chrome").setChromeOptions(new chrome.Options().headless()).build();
+        let driver = await new Builder().forBrowser("chrome").build();
 
         // Maximize the window.
         await driver.manage().window().maximize();
@@ -50,7 +50,29 @@ const chrome = require('selenium-webdriver/chrome');
         return driver;
     }
 
-    static 
+    static RandomString(length = 5, includeNumerics = true)
+    {
+        var returnString = [];
+
+        var characterList = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+        // If the resulting string should not include numbers, remove them.
+        if (!includeNumerics)
+        {
+            characterList.replace('0123456789', '');
+        }
+
+        // Get the length of the character list, for use in the randomizing.
+        var characterListLength = characterList.length;
+
+        // Create a random string, of the appropriate length.
+        for (var i = 0; i < length; i++)
+        {
+            returnString.push(characterList.charAt(Math.floor(Math.random() * characterListLength)));
+        }
+
+        return returnString.join('');
+    }
  } 
 
 module.exports = globals

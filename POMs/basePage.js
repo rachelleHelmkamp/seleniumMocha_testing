@@ -1,4 +1,4 @@
-const {By, until, ExpectedConditions, Actions} = require("selenium-webdriver");
+const {By, until, ExpectedConditions, Actions, WebDriver} = require("selenium-webdriver");
 
 class basePage
 {
@@ -30,9 +30,16 @@ class basePage
         await this.driver.actions({async:true}).move({x:0,y:0,origin:elementToMoveTo}).perform();
     }
 
-    async input(locator, text)
+    async input(locator, text, clearFirst = false)
     {
         await this.driver.wait(until.elementLocated(locator));
+
+        if (clearFirst)
+        {
+            await this.click(locator);
+            await this.clear(locator);
+        }
+
         await this.find(locator).sendKeys(text);
     }
 
@@ -51,6 +58,12 @@ class basePage
     async exists(locator)
     {
         return await this.driver.findElements(locator).length > 0;
+    }
+
+    async clear(locator)
+    {
+        await this.driver.wait(until.elementLocated(locator)) && this.driver.wait(until.elementIsEnabled(locator));
+        return await this.driver.findElement(locator).clear();
     }
 }
 

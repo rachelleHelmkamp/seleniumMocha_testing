@@ -1,67 +1,77 @@
 const {By, until, ExpectedConditions} = require("selenium-webdriver");
 const caseCaveHeader = require("./caseCaveHeader");
 const Constants = require("../Enums/Constants");
-const {caseCaveHeaderText, lnkDashboard, lnkCases, lnkAssignments, lnkUnknownCases, lnkVPA, lnkUserLookup, lnkMessages, lnkTransferCases, lnkPreppedAnswers} = require("./caseCaveHeader");
+
+// Page elements.
+
+// Header elements
+const caseNumber = { xpath: "//span[contains(text(), 'Case #')]" }
+const lnkChildParent = {xpath: "//div[contains(@class, 'CaseDetails__ParentChildeCaseContainer')]//*[self::a or self::span]" }
+const btnActions = { xpath: "//button[p[text()='Actions']]" }
+
+// User Details
+const wrdsUser = { xpath: "//div[text()='USER']/following-sibling::div/div" }
+const wrdsClientCompany = { xpath: "//div[text()='CLIENT COMPANY']/following-sibling::div/div" }
+const wrdsPartnerCompany = { xpath: "//div[text()='PARTNER COMPANY']/following-sibling::div/div" }
+const wrdsPlatform = { xpath: "//div[text()='PLATFORM']/following-sibling::div/div" }
+const wrdsClientEmployees = { xpath: "//div[text()='CLIENT EMPLOYEES']/following-sibling::div/div" }
+const wrdsEmail = { xpath: "//div[text()='EMAIL']/following-sibling::div/div" }
+const wrdsPhone = { xpath: "//div[text()='PHONE']/following-sibling::div/div" }
+const wrdsCases90Days = { xpath: "//div[text()='CASES IN 90 DAYS']/following-sibling::div/div" }
+const wrdsMemberSince = { xpath: "//div[text()='MEMBER SINCE']/following-sibling::div/div" }
+const btnEditUser = { xpath: "//button[div[p[text()='Edit User']]]" }
+const btnEditCompany = { xpath: "//button[div[p[text()='Edit Company']]]" }
+const btnViewAllProducts = { xpath: "//button[p[text()='View All Products']]" }
+
+// Case Details
+const wrdsCaseType = { xpath: "//div[text()='CASE TYPE']/following-sibling::div/div" }
+const wrdsStatus = { xpath: "//div[text()='STATUS']/following-sibling::div/div" }
+const wrdsSource = { xpath: "//div[text()='SOURCE']/following-sibling::div/div" }
+const wrdsPriority = { xpath: "//div[text()='PRIORITY']/following-sibling::div/div" }
+const wrdsTopics = { xpath: "//div[text()='TOPICS']/following-sibling::div/div" }
+const wrdsCaseEmployees = { xpath: "//div[text()='CASE EMPLOYEES']/following-sibling::div/div" }
+const wrdsContactPreference = { xpath: "//div[text()='CONTACT PREFERENCE']/following-sibling::div/div" }
+const wrdsOutOfScope = { xpath: "//div[text()='OUT OF SCOPE']/following-sibling::div/div" }
+const wrdsImmediateTransfer = { xpath: "//div[text()='IMMEDIATE TRANSFER?']/following-sibling::div/div" }
+const wrdsCaseSubmittedByPartner = { xpath: "//div[text()='CASE SUBMITTED BY PARTNER']/following-sibling::div/div" }
+const wrdsShareResponseWithClient = { xpath: "//div[text()='SHARE RESPONSE WITH CLIENT']/following-sibling::div/div" }
+const wrdsPartnerContact = { xpath: "//div[text()='PARTNER CONTACT']/following-sibling::div/div" }
+const btnEditCaseDetails = { xpath: "//button[p[text()='Edit Case Details']]" }
+
+// Question & Answer
+const btnQuestionAndAnswer = { xpath: "//span[text()='Question & Answer']" }
+const wrdsQuestion = { xpath: "(//span[text()='Question']/following-sibling::div/p)[1]" }
+const lnkEditQuestion = { xpath: "(//span[text()='Question']/following-sibling::div//a[text()='Edit Question'])[1]" }
+const wrdsAnswer = { xpath: "(//span[text()='Answer']/following-sibling::div/p)[1]" }
+const lnkAddEditAnswer = {xpath: "(//span[text()='Answer']/following-sibling::div//a[text()='Add Answer' or text()='Edit Answer'])[1]" }
+const lnkAddClientAttachment = { xpath: "//a[text()='Add Client Attachment']" }
+const lnkAddExpertAttachment = { xpath: "//a[text()='Add Expert Attachment']" }
+
+// Fields viewable when editing the Question and Answer
+const txtQuestion = { xpath: "(//span[text()='Question']/following-sibling::div//div[@class='DraftEditor-editorContainer'])[1]/descendant-or-self::span[last()]" }
+const btnQuestionCancel = { xpath: "//span[text()='Question']/following-sibling::div[1]/div[2]/button[text()='Cancel']" }
+const btnQuestionSaveChanges = { xpath: "//span[text()='Question']/following-sibling::div[1]/div[2]/button[text()='Save changes']" }
+
+//const txtAnswer = { xpath: "(//span[text()='Answer']/following-sibling::div//div[@class='DraftEditor-editorContainer'])[1]/descendant-or-self::span[last()]" }
+const txtAnswer = { xpath: "(//span[text()='Answer']/following-sibling::div//div[@class='DraftEditor-editorContainer'])/div" }
+const btnAnswerCancel = { xpath: "//span[text()='Answer']/following-sibling::div[1]/div[2]/button[text()='Cancel']" }
+const btnAnswerSaveChanges = { xpath: "//span[text()='Answer']/following-sibling::div[1]/div[2]/button[text()='Save changes']" }
+
+// Resources
+const btnResources = { xpath: "//span[text()='Resources']" }
+
+// Partner-View Messages
+const btnPartnerViewMessages = { xpath: "//span[text()='Partner-View Messages']" }
+
+// Case Log
+const wrdsCaseLog = { xpath: "//span[text()='Case Log']" }
 
 class CaseDetails extends caseCaveHeader
 {
-    // Header elements
-    static caseNumber = { xpath: "//span[contains(text(), 'Case #')]" }
-    static lnkChildParent = {xpath: "//div[contains(@class, 'CaseDetails__ParentChildeCaseContainer')]//*[self::a or self::span]" }
-    static btnActions = { xpath: "//button[p[text()='Actions']]" }
-
-    // User Details
-    static wrdsUser = { xpath: "//div[text()='USER']/following-sibling::div/div" }
-    static wrdsClientCompany = { xpath: "//div[text()='CLIENT COMPANY']/following-sibling::div/div" }
-    static wrdsPartnerCompany = { xpath: "//div[text()='PARTNER COMPANY']/following-sibling::div/div" }
-    static wrdsPlatform = { xpath: "//div[text()='PLATFORM']/following-sibling::div/div" }
-    static wrdsClientEmployees = { xpath: "//div[text()='CLIENT EMPLOYEES']/following-sibling::div/div" }
-    static wrdsEmail = { xpath: "//div[text()='EMAIL']/following-sibling::div/div" }
-    static wrdsPhone = { xpath: "//div[text()='PHONE']/following-sibling::div/div" }
-    static wrdsCases90Days = { xpath: "//div[text()='CASES IN 90 DAYS']/following-sibling::div/div" }
-    static wrdsMemberSince = { xpath: "//div[text()='MEMBER SINCE']/following-sibling::div/div" }
-    static btnEditUser = { xpath: "//button[div[p[text()='Edit User']]]" }
-    static btnEditCompany = { xpath: "//button[div[p[text()='Edit Company']]]" }
-    static btnViewAllProducts = { xpath: "//button[p[text()='View All Products']]" }
-
-    // Case Details
-    static wrdsCaseType = { xpath: "//div[text()='CASE TYPE']/following-sibling::div/div" }
-    static wrdsStatus = { xpath: "//div[text()='STATUS']/following-sibling::div/div" }
-    static wrdsSource = { xpath: "//div[text()='SOURCE']/following-sibling::div/div" }
-    static wrdsPriority = { xpath: "//div[text()='PRIORITY']/following-sibling::div/div" }
-    static wrdsTopics = { xpath: "//div[text()='TOPICS']/following-sibling::div/div" }
-    static wrdsCaseEmployees = { xpath: "//div[text()='CASE EMPLOYEES']/following-sibling::div/div" }
-    static wrdsContactPreference = { xpath: "//div[text()='CONTACT PREFERENCE']/following-sibling::div/div" }
-    static wrdsOutOfScope = { xpath: "//div[text()='OUT OF SCOPE']/following-sibling::div/div" }
-    static wrdsImmediateTransfer = { xpath: "//div[text()='IMMEDIATE TRANSFER?']/following-sibling::div/div" }
-    static wrdsCaseSubmittedByPartner = { xpath: "//div[text()='CASE SUBMITTED BY PARTNER']/following-sibling::div/div" }
-    static wrdsShareResponseWithClient = { xpath: "//div[text()='SHARE RESPONSE WITH CLIENT']/following-sibling::div/div" }
-    static wrdsPartnerContact = { xpath: "//div[text()='PARTNER CONTACT']/following-sibling::div/div" }
-    static btnEditCaseDetails = { xpath: "//button[p[text()='Edit Case Details']]" }
-
-    // Question & Answer
-    static btnQuestionAndAnswer = { xpath: "//span[text()='Question & Answer']" }
-    static wrdsQuestion = { xpath: "(//span[text()='Question']/following-sibling::div/p)[1]" }
-    static lnkEditQuestion = { xpath: "(//span[text()='Question']/following-sibling::div//a[text()='Edit Question'])[1]" }
-    static wrdsAnswer = { xpath: "(//span[text()='Answer']/following-sibling::div/p)[1]" }
-    static lnkAddEditAnswer = {xpath: "(//span[text()='Answer']/following-sibling::div//a[text()='Add Answer' or text()='Edit Answer'])[1]" }
-    static lnkAddClientAttachment = { xpath: "//a[text()='Add Client Attachment']" }
-    static lnkAddExpertAttachment = { xpath: "//a[text()='Add Expert Attachment']" }
-
-    // Fields viewable when editing the Question and Answer
-    static txtQuestion = { xpath: "(//span[text()='Question']/following-sibling::div//div[@class='DraftEditor-editorContainer'])[1]/descendant-or-self::span[last()]" }
-    static btnQuestionCancel = { xpath: "//span[text()='Question']/following-sibling::div[1]/div[2]/button[text()='Cancel']" }
-    static btnQuestionSaveChanges = { xpath: "//span[text()='Question']/following-sibling::div[1]/div[2]/button[text()='Save changes']" }
-
-    static txtAnswer = { xpath: "(//span[text()='Answer']/following-sibling::div//div[@class='DraftEditor-editorContainer'])[1]/descendant-or-self::span[last()]" }
-    static btnAnswerCancel = { xpath: "//span[text()='Answer']/following-sibling::div[1]/div[2]/button[text()='Cancel']" }
-    static btnAnswerSaveChanges = { xpath: "//span[text()='Answer']/following-sibling::div[1]/div[2]/button[text()='Save changes']" }
-
-    // Resources
-    static btnResources = { xpath: "//span[text()='Resources']" }
-
-    // Partner-View Messages
-    static btnPartnerViewMessages = { xpath: "//span[text()='Partner-View Messages']" }
+    constructor(driver)
+    {
+        super(driver);
+    }
 
     async SelectActionsItem(menuItem)
     {
@@ -179,33 +189,79 @@ class CaseDetails extends caseCaveHeader
         return await this.text(wrdsQuestion);
     }
 
+    async ClickQuestion()
+    {
+        await this.click(lnkEditQuestion);
+    }
+
+    async EnterQuestion(text, clearFirst = false)
+    {
+        await this.input(txtQuestion, text, clearFirst);
+    }
+
     async GetAnswer()
     {
         return await this.text(wrdsAnswer);
     }
+    
+    async ClickAnswer()
+    {
+        await this.click(lnkAddEditAnswer);
+    }
 
-    async UpdateQuestion(newText)
+    async EnterAnswer(text, clearFirst = false)
+    {
+        await this.input(txtAnswer, text, clearFirst);
+    }
+
+    async CancelAnswer()
+    {
+        await this.click(btnAnswerCancel);
+    }
+
+    async UpdateQuestion(newText, clearFirst = false)
     {
         // Click on the Edit Question link. 
-        await this.click(lnkEditQuestion);
+        await this.ClickQuestion();
 
         // Enter the new text in the field.
-        await this.input(txtQuestion, newText);
+        await this.EnterQuestion(newText, clearFirst);
 
         // Click the Save changes button.
         await this.click(btnQuestionSaveChanges);
     }
 
-    async UpdateAnswer(newText)
+    async UpdateAnswer(newText, clearFirst = false)
     {
         // Click on the Add/Edit Answer link.
-        await this.click(lnkAddEditAnswer);
+        await this.ClickAnswer();
 
         // Enter the new text in the field.
-        await this.input(txtAnswer, newText);
+        await this.EnterAnswer(newText, clearFirst);
 
         // Click the Save changes button.
         await this.click(btnAnswerSaveChanges);
+    }
+
+    async VerifyEditQuestionButtons()
+    {
+        var buttonsFound = false;
+        buttonsFound = this.isDisplayed(btnQuestionCancel) && this.isDisplayed(btnQuestionSaveChanges);
+
+        return buttonsFound;
+    }
+
+    async VerifyEditAnswerButtons()
+    {
+        var buttonsFound = false;
+        buttonsFound = this.isDisplayed(btnAnswerCancel) && this.isDisplayed(btnAnswerSaveChanges);
+
+        return buttonsFound;
+    }
+
+    async WaitForLoading()
+    {
+        await this.isDisplayed(wrdsCaseLog);
     }
 }
 module.exports = CaseDetails;
