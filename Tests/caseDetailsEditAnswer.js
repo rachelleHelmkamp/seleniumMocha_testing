@@ -4,6 +4,7 @@ const globals = require("../global/globals.js");
 const {By, Key, Builder, WebElementCondition, WebDriver, until, WebElement, ExpectedConditions} = require("selenium-webdriver");
 require("chromedriver");
 var assert = require("assert")
+const addContext = require("mochawesome/addContext")
 
 // These are the enums to help keep things organized when specifying values.
 const Constants = require("../Enums/Constants.js");
@@ -70,6 +71,10 @@ describe('Case Cave Case Details - Edit Answer', function()
 
         // Open any case.
         var caseToOpen = globals.RandomNumber(1, await landingPage.GetNumberOfDisplayedCases());
+
+        // Write the case number chosen for logging purposes.
+        var caseChosen = `Case number chosen for testing: ${await landingPage.GetCaseIDText(caseToOpen)}.`;
+        addContext(this, caseChosen);
         await landingPage.ClickViewButton(caseToOpen);
 
         // Wait for the details screen to load.
@@ -103,6 +108,6 @@ describe('Case Cave Case Details - Edit Answer', function()
         
         // Verify the entered text is visible.
         var newAnswerText = await caseDetails.GetAnswer();
-        assert(newAnswerText == randomAnswerText, `The Answer has been updated successfully. '${newAnswerText}' should equal '${randomAnswerText}'.`);
+        assert(newAnswerText == currentAnswerText+randomAnswerText, `The Answer has been updated successfully. '${newAnswerText}' should equal '${currentAnswerText}${randomAnswerText}'.`);
     })
 })

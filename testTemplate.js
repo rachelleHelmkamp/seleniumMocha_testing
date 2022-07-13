@@ -4,6 +4,7 @@ const globals = require("../global/globals.js");
 const {By, Key, Builder, WebElementCondition, WebDriver, until, WebElement, ExpectedConditions} = require("selenium-webdriver");
 require("chromedriver");
 var assert = require("assert")
+const addContext = require("mochawesome/addContext")
 
 // These are the enums to help keep things organized when specifying values.
 const Constants = require("../Enums/Constants.js");

@@ -17,7 +17,7 @@
             "--reporter",
             "mochawesome",
             "--reporter-options", 
-            "reportFilename=[status]_[datetime]",
+            "reportFilename=[status]_[datetime],reportDir=C:/Users/RachelleHelmkamp/mochaAutomation/seleniumMocha_testing/mochawesome",
             "../config/qa.env",
             "${workspaceFolder}/Tests"
         ],
@@ -28,7 +28,8 @@
         "skipFiles": [
             "<node_internals>/**"
         ],
-        "type": "node"
+        "type": "node",
+        "reportDir": "C:/Users/RachelleHelmkamp/mochaAutomation/seleniumMocha_testing/mochawesome"
     },
         {
             "args": [

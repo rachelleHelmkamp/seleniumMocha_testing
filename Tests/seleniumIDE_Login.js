@@ -3,41 +3,25 @@ const { Builder, By, Key, until } = require('selenium-webdriver')
 require("chromedriver");
 const assert = require('assert')
 const globals = require("../global/globals.js");
-const path = require("path");
-const fProcess = require('find-process');
+const addContext = require("mochawesome/addContext")
 
 describe('LoginAndVerifyContactExperts', function() {
   this.timeout(30000)
   let driver
-  let vars
   let pw
   let url
 
   before(async function()
   {
-    // One option here...
-        // we have the current process, which has the parent ID. The parent process should have all of the launch parameters.
-        // Get the ID of the parent process.
-        // Get the actual parent process.
-        // Get the parentProcess.argv.
-        // Parse that out to get the environment to use to get the correct .env file to use.
-        let parentProcess = await fProcess('pid', process.ppid);
-        let thing = parentProcess[0];
-        console.log(thing);
-        let pArgs = thing.cmd.split(' ');
-        let envToLoad = pArgs[pArgs.length-2]
+    // This handles getting the needed variables for the environment specified in 
+    let envVars = await globals.GetEnvironmentVariables();
 
-        require('dotenv').config({ path: path.resolve(__dirname, envToLoad)});
-
-        // Set variables here, most likely user/environment.
-        url = process.env.URL;
-        pw = process.env.PASSWORD;
+    // Set variables here, most likely user/environment.
+    url = envVars[0];
+    pw = envVars[1];
   })
   beforeEach(async function() {
-    driver = await new Builder().forBrowser('chrome').build();
-    
-    // Maximize the window.
-    await driver.manage().window().maximize();
+    driver = await globals.CreateDriver();
   })
 
   afterEach(async function() {

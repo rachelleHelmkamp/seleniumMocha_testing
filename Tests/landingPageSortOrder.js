@@ -3,6 +3,7 @@
 const {By, Key, Builder, WebElementCondition, WebDriver, until, WebElement, ExpectedConditions} = require("selenium-webdriver");
 require("chromedriver");
 var assert = require("assert")
+const addContext = require("mochawesome/addContext")
 
 // These are the enums to help keep things organized when specifying values.
 const Constants = require("../Enums/Constants.js");
@@ -97,6 +98,6 @@ describe('Case Cave Landing Page - sort order verification', function()
     // This is the actual test function.
     it('report checking', async function()
     {        
-        assert(1==2, "Failure to check wtf is going on with reporting.");
+        assert(1==1, "Failure to check wtf is going on with reporting.");
     }) 
 })

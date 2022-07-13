@@ -1425,21 +1425,6 @@ node_modules/find-process/lib/find_pid.js
 node_modules/find-process/lib/find_process.js
 node_modules/find-process/lib/find.js
 node_modules/find-process/lib/utils.js
-mochawesome-report/pass_2022-07-08T145444-0700.html
-mochawesome-report/pass_2022-07-08T145444-0700.json
-mochawesome-report/pass_2022-07-08T145740-0700.html
-mochawesome-report/pass_2022-07-08T145740-0700.json
-mochawesome-report/assets/app.css
-mochawesome-report/assets/app.js
-mochawesome-report/assets/app.js.LICENSE.txt
-mochawesome-report/assets/MaterialIcons-Regular.woff
-mochawesome-report/assets/MaterialIcons-Regular.woff2
-mochawesome-report/assets/roboto-light-webfont.woff
-mochawesome-report/assets/roboto-light-webfont.woff2
-mochawesome-report/assets/roboto-medium-webfont.woff
-mochawesome-report/assets/roboto-medium-webfont.woff2
-mochawesome-report/assets/roboto-regular-webfont.woff
-mochawesome-report/assets/roboto-regular-webfont.woff2
 node_modules/.bin/loose-envify
 node_modules/.bin/loose-envify.cmd
 node_modules/.bin/loose-envify.ps1
@@ -2086,3 +2071,4 @@ node_modules/validator/lib/util/multilineRegex.js
 node_modules/validator/lib/util/toString.js
 node_modules/validator/lib/util/typeOf.js
 mochawesome-report/
+mochawesome/
