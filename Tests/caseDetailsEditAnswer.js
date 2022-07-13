@@ -11,9 +11,9 @@ const { addConsoleHandler } = require("selenium-webdriver/lib/logging.js");
 
 describe('Case Cave Case Details - Edit Answer', function()
 {
-    let driver
-    let pw
-    let url
+    let driver;
+    let pw = "";
+    let url = "";
 
     before(async function()
     {   
@@ -69,7 +69,7 @@ describe('Case Cave Case Details - Edit Answer', function()
         await dashboard.NavigateToCaseCave();
 
         // Open any case.
-        var caseToOpen = Math.floor(Math.random() * await landingPage.GetNumberOfDisplayedCases());
+        var caseToOpen = globals.RandomNumber(1, await landingPage.GetNumberOfDisplayedCases());
         await landingPage.ClickViewButton(caseToOpen);
 
         // Wait for the details screen to load.
@@ -96,13 +96,13 @@ describe('Case Cave Case Details - Edit Answer', function()
         await caseDetails.WaitForLoading();
 
         // Enter an answer and save it this time.
-        await caseDetails.UpdateAnswer(randomAnswerText, true);
+        await caseDetails.UpdateAnswer(randomAnswerText);
 
         // Wait again for the case to reload.
         await caseDetails.WaitForLoading();
         
         // Verify the entered text is visible.
         var newAnswerText = await caseDetails.GetAnswer();
-        assert(newAnswerText == randomAnswerText, `The Answer has been updated successfully. ${newAnswerText} should equal ${randomAnswerText}.`);
+        assert(newAnswerText == randomAnswerText, `The Answer has been updated successfully. '${newAnswerText}' should equal '${randomAnswerText}'.`);
     })
 })

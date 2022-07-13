@@ -11,9 +11,9 @@ const globals = require("../global/globals.js");
 
 describe('Case Cave Landing Page - sort order verification', function()
 {
-    let driver
-    let pw
-    let url
+    let driver;
+    let pw = "";
+    let url = "";
 
     before(async function()
     {   
@@ -52,6 +52,7 @@ describe('Case Cave Landing Page - sort order verification', function()
         let signIn = new SignIn(driver);
         let ccLanding = new CaseCaveLanding(driver);
 
+        // Set the user who should be running this case.
         var username = "mayur_sa";
 
         // Sign in to the platform and wait for redirection to the dashboard.

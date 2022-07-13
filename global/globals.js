@@ -73,6 +73,18 @@ const chrome = require('selenium-webdriver/chrome');
 
         return returnString.join('');
     }
+
+    static RandomNumber(inclusiveLowerBound, inclusiveUpperBound)
+    {
+        var retValue = 1;
+
+        inclusiveLowerBound = Math.ceil(inclusiveLowerBound);
+        inclusiveUpperBound = Math.floor(inclusiveUpperBound);
+
+        retValue = Math.floor(Math.random() * (inclusiveUpperBound - inclusiveLowerBound + 1) + inclusiveLowerBound);
+
+        return retValue;
+    }
  } 
 
 module.exports = globals

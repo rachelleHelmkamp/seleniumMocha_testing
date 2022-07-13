@@ -1,5 +1,7 @@
 const {By, until, ExpectedConditions, Actions, WebDriver} = require("selenium-webdriver");
 
+const elementTimeout = 180000;
+
 class basePage
 {
     constructor(driver)
@@ -19,20 +21,20 @@ class basePage
 
     async click(locator)
     {
-        await this.driver.wait(until.elementLocated(locator));
+        await this.driver.wait(until.elementLocated(locator), elementTimeout);
         return this.find(locator).click();
     }
 
     async hover(locator)
     {
-        await this.driver.wait(until.elementLocated(locator));
+        await this.driver.wait(until.elementLocated(locator), elementTimeout);
         let elementToMoveTo = await this.find(locator);
         await this.driver.actions({async:true}).move({x:0,y:0,origin:elementToMoveTo}).perform();
     }
 
     async input(locator, text, clearFirst = false)
     {
-        await this.driver.wait(until.elementLocated(locator));
+        await this.driver.wait(until.elementLocated(locator), elementTimeout);
 
         if (clearFirst)
         {
@@ -45,13 +47,13 @@ class basePage
 
     async isDisplayed(locator)
     {
-        await this.driver.wait(until.elementLocated(locator));
+        await this.driver.wait(until.elementLocated(locator), elementTimeout);
         return await this.find(locator).isDisplayed();
     }
 
     async text(locator)
     {
-        await this.driver.wait(until.elementLocated(locator));
+        await this.driver.wait(until.elementLocated(locator), elementTimeout);
         return await this.find(locator).getText();
     }
 
@@ -62,7 +64,7 @@ class basePage
 
     async clear(locator)
     {
-        await this.driver.wait(until.elementLocated(locator)) && this.driver.wait(until.elementIsEnabled(locator));
+        await this.driver.wait(until.elementLocated(locator), elementTimeout) && this.driver.wait(until.elementIsEnabled(locator), elementTimeout);
         return await this.driver.findElement(locator).clear();
     }
 }
