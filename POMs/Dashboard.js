@@ -1,6 +1,7 @@
 const {until} = require("selenium-webdriver");
 const CaseCaveLandingPage = require("./CaseCaveLandingPage");
 const mineralHeader = require("./mineralHeader");
+const MyCases = require("./MyCases");
 
 // Page elements.
 const dashboardHeader = { xpath: "//span[text()='My Dashboard']" }
@@ -45,6 +46,15 @@ class Dashboard extends mineralHeader {
 
         let ccl = new CaseCaveLandingPage(this.driver);
         await ccl.WaitForCaseLoading();
+    }
+
+    async NavigateToMyCases()
+    {
+        await this.hover(mineralHeader.btnAvatar);
+        await this.click(mineralHeader.btnMyCases);
+
+        let mc = new MyCases(this.driver);
+        await mc.WaitForLoading();
     }
 }
 

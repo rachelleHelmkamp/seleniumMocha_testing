@@ -48,7 +48,7 @@
                 "--charts",
                 "true",
                 "../config/qa.env",
-                "${workspaceFolder}/Tests/caseDetailsEditAnswer.js"
+                "${workspaceFolder}/Tests/myCasesVerifyFilters.js"
             ],
             "internalConsoleOptions": "openOnSessionStart",
             "name": "Mocha Single Test",

@@ -52,7 +52,6 @@ const txtQuestion = { xpath: "(//span[text()='Question']/following-sibling::div/
 const btnQuestionCancel = { xpath: "//span[text()='Question']/following-sibling::div[1]/div[2]/button[text()='Cancel']" }
 const btnQuestionSaveChanges = { xpath: "//span[text()='Question']/following-sibling::div[1]/div[2]/button[text()='Save changes']" }
 
-//const txtAnswer = { xpath: "(//span[text()='Answer']/following-sibling::div//div[@class='DraftEditor-editorContainer'])[1]/descendant-or-self::span[last()]" }
 const txtAnswer = { xpath: "(//span[text()='Answer']/following-sibling::div//div[@class='DraftEditor-editorContainer'])/div" }
 const btnAnswerCancel = { xpath: "//span[text()='Answer']/following-sibling::div[1]/div[2]/button[text()='Cancel']" }
 const btnAnswerSaveChanges = { xpath: "//span[text()='Answer']/following-sibling::div[1]/div[2]/button[text()='Save changes']" }

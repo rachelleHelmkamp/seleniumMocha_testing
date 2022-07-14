@@ -67,6 +67,17 @@ class basePage
         await this.driver.wait(until.elementLocated(locator), elementTimeout) && this.driver.wait(until.elementIsEnabled(locator), elementTimeout);
         return await this.driver.findElement(locator).clear();
     }
+
+    async isActive(locator)
+    {
+        await this.driver.wait(until.elementLocated(locator), elementTimeout);
+        return await this.find(locator).getAttribute('disabled') !=null ;
+    }
+
+    async WaitForReadyState()
+    {
+        await this.driver.wait(until.stalenessOf()).until(execute_script('return document.readyState') == 'complete');
+    }
 }
 
 module.exports = basePage
