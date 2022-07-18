@@ -3,6 +3,7 @@ const caseCaveHeader = require("./caseCaveHeader");
 const Constants = require("../Enums/Constants");
 const {caseCaveHeaderText, lnkDashboard, lnkCases, lnkAssignments, lnkUnknownCases, lnkVPA, lnkUserLookup, lnkMessages, lnkTransferCases, lnkPreppedAnswers} = require("./caseCaveHeader");
 const ccHeader = require("./caseCaveHeader");
+const Messages = require("./CaseCaveMessages");
 
 // Filter elements.
 const btnHideFilters = { xpath: "//div[contains(@class,'Filters__CollapsePanelWrapper')]" }
@@ -177,10 +178,18 @@ class CaseCaveLandingPage extends caseCaveHeader
         await this.WaitForCaseLoading();
     }
 
-    async WaitForCaseLoading()
+    async NavigateToMessages()
     {
-        await this.driver.wait(await until.elementsLocated({xpath: `${xpathForCaseCards}/div` }, 30000));
+        await this.click(lnkMessages);
+
+        var mes = new Messages(this.driver);
+        await mes.WaitForPageLoad();
     }
 
+    async WaitForCaseLoading()
+    {
+        await this.driver.wait(await until.elementsLocated({ xpath: `//div[contains(@class,'CaseList__CaseListContainer') or text()='No matching cases found.']` }, 30000));
+        await this.hover(caseCaveHeaderText);
+    }
 }
 module.exports = CaseCaveLandingPage;

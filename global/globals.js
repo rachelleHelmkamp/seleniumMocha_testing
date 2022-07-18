@@ -41,8 +41,10 @@ const chrome = require('selenium-webdriver/chrome');
     static async CreateDriver()
     {
         // Create the driver, and Wait for it to build and launch. 
-        //let driver = await new Builder().forBrowser("chrome").setChromeOptions(new chrome.Options().headless()).build();
-        let driver = await new Builder().forBrowser("chrome").build();
+        //let driver = await new Builder().forBrowser("chrome").setChromeOptions(new chrome.Options().headless().setPageLoadStrategy("eager")).build();
+        let driver = await new Builder().forBrowser("chrome").setChromeOptions(new chrome.Options().setPageLoadStrategy("eager")).build();
+
+        //driver.manage().setTimeouts({ pageLoad: 180000});
 
         // Maximize the window.
         await driver.manage().window().maximize();

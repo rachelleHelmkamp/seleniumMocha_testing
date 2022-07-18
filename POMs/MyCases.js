@@ -17,14 +17,31 @@ const btnApply = { xpath: "//button[p[text()='APPLY']]" }
 const btnReset = { xpath: "//a[text()='RESET']" }
 const btnCloseFilters = { xpath: "//div[contains(@class, 'ClosePanelContainer')]" }
 
-// first table cell to check for staleness;
-const tblHeaderCell = { xpath: "//table/thead//th[1]" }
+// My Cases/Client Cases tabs
+const btnMyCases = { xpath: "//li[text()='My Cases']" }
+const btnClientCases = { xpath: "//li[text()='Client Cases']" }
+
+// Additional filter for client cases.
+const ddSubmittedBy = { xpath: "//span[text()='Submitted By' and @type='documentFilter']/ancestor::div[1]" }
+
 
 class MyCases extends caseCaveHeader {
 
     constructor(driver)
     {
         super(driver)
+    }
+
+    async ClickMyCasesTab()
+    {
+        await this.click(btnMyCases);
+        await this.WaitForFilterRefresh();
+    }
+
+    async ClickClientCasesTab()
+    {
+        await this.click(btnClientCases);
+        await this.WaitForFilterRefresh();
     }
 
     async ClickFiltersButton()
@@ -92,7 +109,16 @@ class MyCases extends caseCaveHeader {
         await this.click(dateToPick);
     }
 
-    async ApplyFilters(status = null, type = null, startDay = null, endDay = null)
+    async SelectSubmittedBy(person)
+    {
+        await this.click(ddSubmittedBy);
+
+        var elementToSelect = { xpath: `//div[text()='${input}' and contains(@id,'react-select')]`};
+
+        await this.click(elementToSelect);
+    }
+
+    async ApplyFilters(status = null, type = null, startDay = null, endDay = null, submittedBy = null)
     {
         if (status != null)
             await this.SelectStatusOption(status);
@@ -105,6 +131,9 @@ class MyCases extends caseCaveHeader {
 
         if (endDay != null)
             await this.SelectEndDay(endDay);
+
+        if (submittedBy != null)
+            await this.SelectSubmittedBy(submittedBy);
 
         await this.ClickApplyFilters();
 

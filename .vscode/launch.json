@@ -18,7 +18,7 @@
             "mochawesome",
             "--reporter-options", 
             "reportFilename=[status]_[datetime],reportDir=C:/Users/RachelleHelmkamp/mochaAutomation/seleniumMocha_testing/mochawesome",
-            "../config/qa.env",
+            "../config/alpha.env",
             "${workspaceFolder}/Tests"
         ],
         "internalConsoleOptions": "openOnSessionStart",
@@ -28,8 +28,7 @@
         "skipFiles": [
             "<node_internals>/**"
         ],
-        "type": "node",
-        "reportDir": "C:/Users/RachelleHelmkamp/mochaAutomation/seleniumMocha_testing/mochawesome"
+        "type": "node"
     },
         {
             "args": [
@@ -47,11 +46,44 @@
                 "reportFilename=[status]_[datetime]", 
                 "--charts",
                 "true",
-                "../config/qa.env",
-                "${workspaceFolder}/Tests/myCasesVerifyFilters.js"
+                "../config/alpha.env",
+                "${workspaceFolder}/Tests/messagesCreateMessage.js"
             ],
             "internalConsoleOptions": "openOnSessionStart",
             "name": "Mocha Single Test",
+            "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+            "request": "launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node"
+        },
+
+        {
+            "args": [
+                "--require", 
+                "esm", 
+                "--require", 
+                "ts-node/register",
+                "-u",
+                "bdd",
+                "--timeout",
+                "360000",
+                "--colors", 
+                "--parallel",
+                "--require", 
+                "mochawesome/register",
+                "--reporter",
+                "mochawesome",
+                "--reporter-options", 
+                "reportFilename=[status]_[datetime]", 
+                "--charts",
+                "true",
+                "../config/alpha.env",
+                "${workspaceFolder}/Tests/typescriptTest.ts"
+            ],
+            "internalConsoleOptions": "openOnSessionStart",
+            "name": "Mocha Typescript Test",
             "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
             "request": "launch",
             "skipFiles": [

@@ -55,7 +55,10 @@ describe('My Cases - Verify my cases page', function()
         let myCases = new MyCases(driver);
 
         // Set the user that will be used in the test.
-        var username = "mayur_sa";
+        var username = "ts_padmin_01";
+
+        // Test data logging.        
+        addContext(this, `Test run in '${url}' environment with user '${username}'.`)
 
         // Sign in to the platform and wait for redirection to the dashboard.
         await signIn.load(url);
@@ -68,7 +71,7 @@ describe('My Cases - Verify my cases page', function()
         // Navigate to Avatar > My Cases.
         await dashboard.NavigateToMyCases();
 
-        // Wait for the table/page to load.
+        // Verify My Cases page.
         // Get all of the columns, and compare them to the expected columns.
         var expectedColumns = [ "Case No.", "Status", "Type", "Question", "Date Submitted", "Client", "" ];
         var actualColumns = await myCases.GetTableHeaders();
@@ -79,24 +82,63 @@ describe('My Cases - Verify my cases page', function()
 
         // Filter by type and verify all values are of that type.
         await myCases.ClickFiltersButton();
-        await myCases.ApplyFilters(null, "Advice", null, null);
+        await myCases.ApplyFilters(null, "Advice", null, null, null);
         var columnValues = await myCases.GetAllValuesInColumn("Type");
         var columnValuesMatch = columnValues.every(element => element == "Advice");
         assert(columnValuesMatch, "All returned values are of type 'Advice'.");
 
         // Filter by Status and verify all values are of that status.
         await myCases.ClickResetFilters();
-        await myCases.ApplyFilters("Answered", null, null, null);
+        await myCases.ApplyFilters("Pending Assignment", null, null, null, null);
         columnValues = await myCases.GetAllValuesInColumn("Status");
-        columnValuesMatch = columnValues.every(element => element == "Answered");
-        assert(columnValuesMatch, "All returned values are of status 'Answered'."); 
+        columnValuesMatch = columnValues.every(element => element == "Pending Assignment");
+        assert(columnValuesMatch, "All returned values are of status 'Pending Assignment'."); 
 
         // Filter by start/end date and verify all date submitted values are of that date.
         await myCases.ClickResetFilters();
-        var today = new Date();
-        var day = today.getDate()
-        var dateString = today.toLocaleDateString(undefined, { year: "numeric", month: "2-digit", day: "2-digit" });
+
+        // Get the date from the first entry in the table.
+        var validDate = await myCases.GetValueForColumnAndRow("Date Submitted", 1);
+        var dateDate = new Date(validDate);
+        var day = dateDate.getDate()
+        var dateString = dateDate.toLocaleDateString(undefined, { year: "numeric", month: "2-digit", day: "2-digit" });
         await myCases.ApplyFilters(null, null, day, day);
+        columnValues = await myCases.GetAllValuesInColumn("Date Submitted");
+        columnValuesMatch = columnValues.every(element => element == dateString);
+        assert(columnValuesMatch, `All returned values are of the date ${dateString}.`);
+
+        // Verify Client Cases page.
+        await myCases.ClickClientCasesTab();
+
+        // Get all of the columns, and compare them to the expected columns.
+        var expectedColumns = [ "Case No.", "Status", "Type", "Question", "Date Submitted", "Client", "Submitted By Partner", "" ];
+        var actualColumns = await myCases.GetTableHeaders();
+
+        var columnsMatch = (expectedColumns.length == actualColumns.length) && expectedColumns.every(function(element, index) { return element === actualColumns[index]; });
+
+        assert(columnsMatch, "The expected and actual columns present match.");
+
+        // Filter by type and verify all values are of that type.
+        await myCases.ClickFiltersButton();
+        await myCases.ApplyFilters(null, "Technical Support", null, null, null);
+        var columnValues = await myCases.GetAllValuesInColumn("Type");
+        var columnValuesMatch = columnValues.every(element => element == "Technical Support");
+        assert(columnValuesMatch, "All returned values are of type 'Technical Support'.");
+
+        // Filter by Status and verify all values are of that status.
+        await myCases.ClickResetFilters();
+        await myCases.ApplyFilters("Researching", null, null, null, null);
+        columnValues = await myCases.GetAllValuesInColumn("Status");
+        columnValuesMatch = columnValues.every(element => element == "Researching");
+        assert(columnValuesMatch, "All returned values are of status 'Researching'."); 
+
+        // Filter by start/end date and verify all date submitted values are of that date.
+        await myCases.ClickResetFilters();
+        var validDate = await myCases.GetValueForColumnAndRow("Date Submitted", 1);
+        var dateDate = new Date(validDate);
+        var day = dateDate.getDate()
+        var dateString = dateDate.toLocaleDateString(undefined, { year: "numeric", month: "2-digit", day: "2-digit" });
+        await myCases.ApplyFilters(null, null, day, day, null);
         columnValues = await myCases.GetAllValuesInColumn("Date Submitted");
         columnValuesMatch = columnValues.every(element => element == dateString);
         assert(columnValuesMatch, `All returned values are todays date of ${dateString}.`);

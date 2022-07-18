@@ -55,6 +55,9 @@ describe('Case Cave Landing Page - sort order verification', function()
 
         // Set the user who should be running this case.
         var username = "mayur_sa";
+        
+        // Test data logging.        
+        addContext(this, `Test run in '${url}' environment with user '${username}'.`)
 
         // Sign in to the platform and wait for redirection to the dashboard.
         await signIn.load(url);

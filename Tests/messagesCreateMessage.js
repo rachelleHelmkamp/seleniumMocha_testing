@@ -10,7 +10,7 @@ const addContext = require("mochawesome/addContext")
 const Constants = require("../Enums/Constants.js");
 const { addConsoleHandler } = require("selenium-webdriver/lib/logging.js");
 
-describe('THIS IS THE SUITE NAME, NAME IT FOR WHAT AREA YOU ARE TESTING', function()
+describe('Case Cave Messages - Create New Message', function()
 {
     let driver
     let pw = "";
@@ -42,18 +42,29 @@ describe('THIS IS THE SUITE NAME, NAME IT FOR WHAT AREA YOU ARE TESTING', functi
     })
 
     // This is the actual test function.
-    it('RENAME THIS METHOD TO WHAT SPECIFICALLY YOU ARE TESTING', async function()
+    it('Create new message', async function()
     {        
         // Reference the POMs that are needed in the test
         const SignIn = require("../POMs/SignIn.js");
         const Dashboard = require("../POMs/Dashboard.js");
+        const CaseCaveLandingPage = require("../POMs/CaseCaveLandingPage");
+        const Messages = require("../POMs/CaseCaveMessages");
 
         // Create the POMs that are being used in the test.
         let signIn = new SignIn(driver);
         let dashboard = new Dashboard(driver);
+        let ccl = new CaseCaveLandingPage(driver);
+        let messages = new Messages(driver);
 
         // Set the user that will be used in the test.
-        var username = "mayur_sa";
+        var username = "hrpro@xyz.com";
+
+        // The case numbers to use.
+        var caseNumber = "";
+        if (url.includes("qa"))
+            caseNumber = "736516";
+        else
+            caseNumber = "323";
         
         // Test data logging.        
         addContext(this, `Test run in '${url}' environment with user '${username}'.`)
@@ -65,6 +76,33 @@ describe('THIS IS THE SUITE NAME, NAME IT FOR WHAT AREA YOU ARE TESTING', functi
         // Wait for the dashboard page to load.
         await dashboard.waitForLoading();
 
-        // Add comments below for each step you need to perform the test.
+        // Navigate to the Case Cave Landing page.
+        await dashboard.NavigateToCaseCave();
+
+        // Navigate to the Messages page.
+        await ccl.NavigateToMessages();
+
+        // Click on Create New Message.
+        await messages.ClickCreateNewMessageButton();
+
+        // Enter the case number, and search for it.
+        await messages.ModalSearchFor(caseNumber);
+
+        // Select a type option (Payroll).
+        await messages.ModalSelectType("Payroll");
+
+        // Enter a message.
+        let newMessage = `New Message ${globals.RandomString(10, true)}`;
+        await messages.ModalInputMessage(newMessage);
+
+        // Click Create Message.
+        await messages.ModalClickCreateMessage();
+
+        // Verify the message now shows up in the table.
+        await messages.SearchFor(newMessage);
+
+        // Verify the case is displayed in the table.
+        var resultsCount = await messages.GetTableRowCount();
+        assert(resultsCount == 1, "The newly created message is displayed in the table.");
     })
 })

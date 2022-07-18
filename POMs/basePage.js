@@ -74,9 +74,24 @@ class basePage
         return await this.find(locator).getAttribute('disabled') !=null ;
     }
 
-    async WaitForReadyState()
+    async selectDropdownOption(dropdown, option)
     {
-        await this.driver.wait(until.stalenessOf()).until(execute_script('return document.readyState') == 'complete');
+        await this.driver.wait(until.elementLocated(dropdown), elementTimeout);
+        await this.hover(dropdown);
+
+        var xpathToSelection = { xpath: `//div[text()='${option}' and contains(@id,'react-select')]` }
+
+        await this.click(xpathToSelection);
+    }
+
+    async selectCalendarDay(selector, day)
+    {
+        await this.driver.wait(until.elementLocated(selector), elementTimeout);
+        await this.click(selector);
+
+        var dateToPick = { xpath: `//div[contains(@class,'react-datepicker__day') and not(contains(@class,'--outside-month')) and text()='${day}']` };
+
+        await this.click(dateToPick);
     }
 }
 
