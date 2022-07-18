@@ -18,6 +18,7 @@ class SignIn extends basePage {
 
     async login(username, password)
     {
+        this.driver.sleep(1000);
         await this.input(USERNAME, username);
         await this.input(PASSWORD, password);
         await this.click(signInButton);

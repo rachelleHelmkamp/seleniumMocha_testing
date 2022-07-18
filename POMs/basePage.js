@@ -93,6 +93,12 @@ class basePage
 
         await this.click(dateToPick);
     }
+
+    async WaitForLoadingDiamonds()
+    {
+        var loadingDiamonds = await this.driver.wait(until.elementLocated({ xpath: "//div[contains(@class,'LoadingIcons__LoadingWrapper')]" }));
+        await this.driver.wait(until.stalenessOf(loadingDiamonds));
+    }
 }
 
 module.exports = basePage

@@ -58,7 +58,7 @@ class Messages extends caseCaveHeader
     async ClickApplyButton()
     {
         await this.click(btnApply);
-        await this.WaitForFilter();
+        await this.WaitForPageLoad();
     }
 
     async ApplyFilters(type = null, start = null, end = null)
@@ -81,7 +81,7 @@ class Messages extends caseCaveHeader
 
         await this.click(btnFind);
 
-        await this.WaitForFilter();
+        await this.WaitForPageLoad();
     }
 
     async ClickCreateNewMessageButton()
@@ -95,7 +95,7 @@ class Messages extends caseCaveHeader
 
         await this.click(btnModalFind);
 
-        await this.WaitForFilter();
+        await this.WaitForPageLoad();
     }
 
     async ModalSelectType(input)
@@ -118,7 +118,7 @@ class Messages extends caseCaveHeader
     async ModalClickCreateMessage()
     {
         await this.click(btnModalCreateMessage);
-        await this.WaitForFilter();
+        await this.WaitForPageLoad();
     }
 
     async GetTableHeaders()
@@ -175,9 +175,8 @@ class Messages extends caseCaveHeader
 
     async WaitForPageLoad()
     {
-        // Temporary, need to set up a wait timer for row count.
-        //var rowCount = await this.GetTableRowCount();
-        await this.driver.sleep(4000);
+        var loadingDiamonds = await this.driver.wait(until.elementLocated({ xpath: "//div[contains(@class,'LoadingIcons__LoadingWrapper')]" }));
+        await this.driver.wait(until.stalenessOf(loadingDiamonds));
     }
 }
 module.exports = Messages;

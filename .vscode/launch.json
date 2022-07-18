@@ -47,7 +47,7 @@
                 "--charts",
                 "true",
                 "../config/alpha.env",
-                "${workspaceFolder}/Tests/messagesCreateMessage.js"
+                "${workspaceFolder}/Tests/myCasesVerifyFilters.js"
             ],
             "internalConsoleOptions": "openOnSessionStart",
             "name": "Mocha Single Test",

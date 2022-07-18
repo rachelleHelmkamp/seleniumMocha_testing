@@ -214,7 +214,8 @@ class MyCases extends caseCaveHeader {
 
     async WaitForFilterRefresh()
     {        
-        await this.driver.sleep(4000);
+        await this.WaitForLoadingDiamonds();
+        //await this.driver.sleep(4000);
     }
 }
 
